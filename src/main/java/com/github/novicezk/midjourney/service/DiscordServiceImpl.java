@@ -59,9 +59,11 @@ public class DiscordServiceImpl implements DiscordService {
 	public Message<Void> imagine(String prompt) {
 		String paramsStr = this.imagineParamsJson.replace("$guild_id", this.discordGuildId)
 				.replace("$channel_id", this.discordChannelId);
+		System.out.println("传值的key值："+paramsStr);
 		JSONObject params = new JSONObject(paramsStr);
 		params.getJSONObject("data").getJSONArray("options").getJSONObject(0)
 				.put("value", prompt);
+		System.out.println("传值的json串："+params);
 		return postJsonAndCheckStatus(params.toString());
 	}
 
