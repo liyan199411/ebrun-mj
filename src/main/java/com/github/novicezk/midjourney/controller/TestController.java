@@ -37,7 +37,7 @@ public class TestController {
 		Date date = new Date();
 		// 创建文件夹格式化日期
 		DateFormat format1 = new SimpleDateFormat("yyyyMMdd");
-		String pan = "/home/ubuntu/ebrgpt/.git/mj/";
+		String pan = "/tmp/midjourney/";
 		//拼接盘符
 		String path=pan+format1.format(date)+"/";
 		System.out.println("上传文件路径--->"+path);
@@ -50,7 +50,7 @@ public class TestController {
 			// 创建多层目录
 			f.mkdirs();
 		}
-		File file = new File(path+"1.png");
+		File file = new File(path+System.currentTimeMillis()+".png");
 		// 判断上传的文件是否存在
 		if (file.exists()) {
 			// 存在则删除
@@ -74,4 +74,5 @@ public class TestController {
 			e.printStackTrace();
 		}
 	}
+
 }
