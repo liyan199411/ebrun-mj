@@ -25,7 +25,7 @@ mj:
   discord:
     guild-id: 1106511482058973186
     channel-id: 1106511482893631510
-    user-token: MTAxNDA1NDUyOTMwNzc3MDg4MA.GCJ54d.ldeGjnFFQ4KRo-LCAs4gbpySYylCfNq8hL2MEw
+    user-token: MTAxNDA1NDUyOTMwNzc3MDg4MA.GHyjvD.OXuci5_F09myJ0TjceLjrbubB6vgRmnV8z-EMc
     bot-token: MTEwNjUxNDIyNzk1MjM3MzgyOA.GGw3zg.uM_ZA9fl-JUiF1FePilUnXuYsHM5-9goM9Cuj0
   task-store:
     type: IN_MEMORY
