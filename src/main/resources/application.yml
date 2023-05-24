@@ -23,12 +23,12 @@ redis:
       min-idle: 0
 mj:
   discord:
-    guild-id: 1110463097577152562
-    channel-id: 1110463098046918758
-    user-token: MTAxMzUyMDcxMDk4OTI3MTA2Mw.GchXiY.fB5YYxkzcdQvW0Z4aEXXVv8iXKRuEgq1-dyUFU
-    bot-token: MTExMDQ2NTcyMzMwNzkyMTQ1OQ.GKnJ1l.yVR5NlavEOD-Kn41fCSPs2K1LIjZtsEGi-HJZs
+    guild-id: 1106511482058973186
+    channel-id: 1106511482893631510
+    user-token: MTAxNDA1NDUyOTMwNzc3MDg4MA.GCJ54d.ldeGjnFFQ4KRo-LCAs4gbpySYylCfNq8hL2MEw
+    bot-token: MTEwNjUxNDIyNzk1MjM3MzgyOA.GGw3zg.uM_ZA9fl-JUiF1FePilUnXuYsHM5-9goM9Cuj0
   task-store:
-    type: REDIS
+    type: IN_MEMORY
     timeout: 480d
   translate-way: null
   queue:
