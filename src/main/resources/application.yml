@@ -25,7 +25,7 @@ mj:
   discord:
     guild-id: 1110463097577152562
     channel-id: 1110463098046918758
-    user-token: MTAxMzUyMDcxMDk4OTI3MTA2Mw.GtyK2Q.Ox63NcIw1XFxh6repCVj6qVRXcmfZrDHJURFVI
+    user-token: MTAxMzUyMDcxMDk4OTI3MTA2Mw.GRCprS.N6VGbOmac5RRvh76-3V6VZ1_06NvVSO8_X7WhY
     bot-token: MTExMDQ2NTcyMzMwNzkyMTQ1OQ.GKnJ1l.yVR5NlavEOD-Kn41fCSPs2K1LIjZtsEGi-HJZs
   task-store:
     type: REDIS
