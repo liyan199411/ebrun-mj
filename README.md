@@ -202,6 +202,8 @@ POST  application/json
     "finishTime":null,
     // 生成图片的url, 成功时有值
     "imageUrl":"https://cdn.discordapp.com/attachments/xxx/xxx/xxxx_xxxx.png",
+    // 生成转存本地图片的url, 成功时有值
+    "localImageUrl":"http://54.67.79.231/ebrunimgs/xxx/xxx/xxxx_xxxx.png",
     // 任务状态: NOT_START（未启动）、SUBMITTED（已提交处理）、IN_PROGRESS（执行中）、FAILURE（失败）、SUCCESS（成功）
     "status":"IN_PROGRESS",
     // 失败原因, 失败时有值

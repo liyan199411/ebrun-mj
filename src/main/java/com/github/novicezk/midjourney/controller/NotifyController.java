@@ -3,6 +3,7 @@ package com.github.novicezk.midjourney.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.github.novicezk.midjourney.support.Task;
+import com.github.novicezk.midjourney.support.TaskNotify;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +33,20 @@ public class NotifyController {
 
 	@ApiOperation(value = "任务回调地址")
 	@PostMapping("/submit")
-	public void submitReturn(HttpServletResponse httpResponse,Task task) {
+	public void submitReturn(TaskNotify task) {
+		System.out.println("任务回调数据, action:"+ task.getAction());
+		System.out.println("任务回调数据, id:"+ task.getId());
+		System.out.println("任务回调数据, prompt:"+ task.getPrompt());
+		System.out.println("任务回调数据, promptEn:"+ task.getPromptEn());
+		System.out.println("任务回调数据, description:"+ task.getDescription());
+		System.out.println("任务回调数据, state:"+ task.getState());
+		System.out.println("任务回调数据, submitTime:"+ task.getSubmitTime());
+		System.out.println("任务回调数据, startTime:"+ task.getStartTime());
+		System.out.println("任务回调数据, finishTime:"+ task.getFinishTime());
+		System.out.println("任务回调数据, imageUrl:"+ task.getImageUrl());
+		System.out.println("任务回调数据, failReason:"+ task.getFailReason());
+		System.out.println("任务回调数据, status:"+ task.getStatus());
+
 		String jsonString = JSONObject.toJSONString(task);
 		System.out.println("任务回调数据, task:"+ jsonString);
 		//Task task = JSON.parseObject(taskStr, Task.class);
