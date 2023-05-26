@@ -161,6 +161,7 @@ public class TaskServiceImpl implements TaskService {
 					System.out.println("生成图片成功路径：--->"+filePath);
 					System.out.println("生成图片可访问的路径：--->"+imgFilePath);
 					taskNotify.setLocalImageUrl(imgFilePath);
+					taskNotify.setFailReason("操作成功");
 				}catch (Exception e){
 					System.out.println("读取文件链接报错图片路径：--->"+imgUrl);
 					e.printStackTrace();

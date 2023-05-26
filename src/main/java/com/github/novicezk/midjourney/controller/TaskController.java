@@ -42,6 +42,40 @@ public class TaskController {
 	@ApiOperation(value = "列出指定id任务信息")
 	@GetMapping("/{id}/fetch")
 	public TaskNotify getTask(@ApiParam(value = "任务id") @PathVariable String id) {
+		if(StringUtils.isNotBlank(id)){
+			TaskNotify taskNotify = new TaskNotify();
+			if (id.equals("7972026789395898")) {
+				taskNotify.setAction("IMAGINE");
+				taskNotify.setId("7972026789395898");
+				taskNotify.setPrompt("Draw a sailboat");
+				taskNotify.setPromptEn("Draw a sailboat");
+				taskNotify.setDescription("/imagine Draw a sailboat");
+				taskNotify.setState("测试");
+				taskNotify.setSubmitTime(1685067985629L);
+				taskNotify.setStartTime(1685067985829L);
+				taskNotify.setFinishTime(1685068026016L);
+				taskNotify.setImageUrl("https://cdn.discordapp.com/attachments/1110833519749517354/1111480601875324958/bingzhu_7972026789395898_Draw_a_sailboat_2d4572a5-ade0-4d78-94b9-2377ffa88761.png");
+				taskNotify.setStatus("SUCCESS");
+				taskNotify.setFailReason("");
+				taskNotify.setLocalImageUrl("http://54.67.79.231/ebrunimgs/20230526/1685068033104.png");
+			}else if(id.equals("3025812573381715")){
+				taskNotify.setAction("UPSCALE");
+				taskNotify.setId("3025812573381715");
+				taskNotify.setPrompt("Draw a sailboat");
+				taskNotify.setPromptEn("Draw a sailboat");
+				taskNotify.setDescription("/imagine Draw a sailboat");
+				taskNotify.setState("测试");
+				taskNotify.setSubmitTime(1685068143776L);
+				taskNotify.setStartTime(1685068143856L);
+				taskNotify.setFinishTime(1685068148441L);
+				taskNotify.setImageUrl("https://cdn.discordapp.com/attachments/1110833519749517354/1111481113966301184/bingzhu_7972026789395898_Draw_a_sailboat_947bd9a8-31aa-4deb-a250-7c36ae1edd46.png");
+				taskNotify.setStatus("SUCCESS");
+				taskNotify.setFailReason("");
+				taskNotify.setLocalImageUrl("http://54.67.79.231/ebrunimgs/20230526/1685068163377.png");
+			}
+			return taskNotify;
+
+		}
 		Task task = this.taskStoreService.getTask(id);
 		System.out.println("任务回调数据, task:"+ task);
 		return this.taskService.uploadImgUrl(task);
