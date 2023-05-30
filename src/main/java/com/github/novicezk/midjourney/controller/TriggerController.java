@@ -23,6 +23,7 @@ import eu.maxschuster.dataurl.IDataUrlSerializer;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,13 +53,8 @@ public class TriggerController {
 			return Message.validationError();
 		}
 		Task task = new Task();
-		if (submitDTO.getState().equals("测试")) {
-			if(submitDTO.getAction().equals(Action.IMAGINE)){
-				return Message.success("7972026789395898");
-			} else if (submitDTO.getAction().equals(Action.UPSCALE)) {
-				return Message.success("3025812573381715");
-			}
-
+		if (StringUtils.isBlank(submitDTO.getNotifyHook())) {
+			submitDTO.setNotifyHook("http://172.31.5.254:9090/mj/notify/submit");
 		}
 
 
