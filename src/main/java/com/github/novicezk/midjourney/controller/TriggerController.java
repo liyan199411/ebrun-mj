@@ -70,8 +70,8 @@ public class TriggerController {
 			}
 			task.setKey(task.getId());
 			task.setPrompt(prompt);
-			String promptEn;
-			int paramStart = prompt.indexOf(" --");
+			String promptEn = prompt;
+			/*int paramStart = prompt.indexOf(" --");
 			if (paramStart > 0) {
 				promptEn = this.translateService.translateToEnglish(prompt.substring(0, paramStart)).trim() + prompt.substring(paramStart);
 			} else {
@@ -79,7 +79,7 @@ public class TriggerController {
 			}
 			if (this.bannedPromptHelper.isBanned(promptEn)) {
 				return Message.of(Message.VALIDATION_ERROR_CODE, "可能包含敏感词");
-			}
+			}*/
 			task.setPromptEn(promptEn);
 			task.setFinalPrompt("[" + task.getId() + "] " + promptEn);
 			task.setDescription("/imagine " + submitDTO.getPrompt());
