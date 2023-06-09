@@ -30,7 +30,10 @@ public class TaskNotify implements Serializable {
 	private String imageUrl;
 	private String status;
 	private String failReason;
-	private String localImageUrl;
+	private String localImageUrl;//小图
+	private String localImageUrlBig;//大图
+	private String localImageUrlOrigin;//原图
+
 
 	@JsonIgnore
 	private final transient Object lock = new Object();
