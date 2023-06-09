@@ -136,56 +136,55 @@ public class TaskServiceImpl implements TaskService {
 					boolean mkdirs = parent.mkdirs();
 					if (!mkdirs) {
 						System.out.println(parent.getPath() + "创建失败，请检查是否有权限");
-					}else {
-						try {
-							imgFileGenerate(imgUrl,orgPath);
-							System.out.println("原图文件保存路径----->>" + orgPath);
-							taskNotify.setLocalImageUrlOrigin(imgPathUrl+orgFilePath);
-							System.out.println("生成原图可访问的路径：--->"+imgPathUrl+orgFilePath);
-
-							BufferedImage bufferedImage = ImageIO.read(localFile);
-							if (bufferedImage != null){
-								Integer width = bufferedImage.getWidth();
-								Integer height = bufferedImage.getHeight();
-								if (width > 1200){
-									DecimalFormat df = new DecimalFormat("0.000");
-									String num = df.format((float)width/height);
-									int parseInt = Integer.parseInt(new DecimalFormat("0").format(Math.ceil((float) 1200 / Float.parseFloat(num))));
-									//scaleImageWithParams(orgPath,bigPath,1200,parseInt);
-									Thumbnails.of(orgPath).forceSize(1200,parseInt).toFile(bigPath);
-									System.out.println("压缩后的大图保存路径----->>" + bigPath);
-								}else {
-									//Thumbnails.of(orgPath).forceSize(width,height).toFile(bigPath);
-									//scaleImageWithParams(orgPath, bigPath,width,height);
-									imgFileGenerate(imgUrl,bigPath);
-									System.out.println("大图保存路径----->>" + bigPath);
-								}
-								taskNotify.setLocalImageUrlBig(imgPathUrl+bigFilePath);
-								System.out.println("生成大图可访问的路径：--->"+imgPathUrl+bigFilePath);
-
-								if (width > 450) {
-									DecimalFormat df = new DecimalFormat("0.000");
-									String num = df.format((float)width/height);
-									int parseInt = Integer.parseInt(new DecimalFormat("0").format(Math.ceil((float) 450 / Float.parseFloat(num))));
-									Thumbnails.of(orgPath).forceSize(450,parseInt).toFile(smallPath);
-									//scaleImageWithParams(orgPath,smallPath,450,parseInt);
-									System.out.println("压缩后的小图保存路径----->>" + smallPath);
-								}else {
-									Thumbnails.of(orgPath).forceSize(width,height).toFile(smallPath);
-									//scaleImageWithParams(orgPath, smallPath,width,height);
-									System.out.println("小图保存路径----->>" + smallPath);
-								}
-								taskNotify.setLocalImageUrl(imgPathUrl+smallFilePath);
-								System.out.println("生成小图可访问的路径：--->"+imgPathUrl+smallFilePath);
-							}else {
-								System.out.println("压缩大图小图失败");
-							}
-							taskNotify.setFailReason("操作成功");
-						}catch (Exception e) {
-							System.out.println("读取文件链接报错图片路径：--->"+imgUrl);
-							e.printStackTrace();
-						}
 					}
+				}
+				try {
+					imgFileGenerate(imgUrl,orgPath);
+					System.out.println("原图文件保存路径----->>" + orgPath);
+					taskNotify.setLocalImageUrlOrigin(imgPathUrl+orgFilePath);
+					System.out.println("生成原图可访问的路径：--->"+imgPathUrl+orgFilePath);
+
+					BufferedImage bufferedImage = ImageIO.read(localFile);
+					if (bufferedImage != null){
+						Integer width = bufferedImage.getWidth();
+						Integer height = bufferedImage.getHeight();
+						if (width > 1200){
+							DecimalFormat df = new DecimalFormat("0.000");
+							String num = df.format((float)width/height);
+							int parseInt = Integer.parseInt(new DecimalFormat("0").format(Math.ceil((float) 1200 / Float.parseFloat(num))));
+							//scaleImageWithParams(orgPath,bigPath,1200,parseInt);
+							Thumbnails.of(orgPath).forceSize(1200,parseInt).toFile(bigPath);
+							System.out.println("压缩后的大图保存路径----->>" + bigPath);
+						}else {
+							//Thumbnails.of(orgPath).forceSize(width,height).toFile(bigPath);
+							//scaleImageWithParams(orgPath, bigPath,width,height);
+							imgFileGenerate(imgUrl,bigPath);
+							System.out.println("大图保存路径----->>" + bigPath);
+						}
+						taskNotify.setLocalImageUrlBig(imgPathUrl+bigFilePath);
+						System.out.println("生成大图可访问的路径：--->"+imgPathUrl+bigFilePath);
+
+						if (width > 450) {
+							DecimalFormat df = new DecimalFormat("0.000");
+							String num = df.format((float)width/height);
+							int parseInt = Integer.parseInt(new DecimalFormat("0").format(Math.ceil((float) 450 / Float.parseFloat(num))));
+							Thumbnails.of(orgPath).forceSize(450,parseInt).toFile(smallPath);
+							//scaleImageWithParams(orgPath,smallPath,450,parseInt);
+							System.out.println("压缩后的小图保存路径----->>" + smallPath);
+						}else {
+							Thumbnails.of(orgPath).forceSize(width,height).toFile(smallPath);
+							//scaleImageWithParams(orgPath, smallPath,width,height);
+							System.out.println("小图保存路径----->>" + smallPath);
+						}
+						taskNotify.setLocalImageUrl(imgPathUrl+smallFilePath);
+						System.out.println("生成小图可访问的路径：--->"+imgPathUrl+smallFilePath);
+					}else {
+						System.out.println("压缩大图小图失败");
+					}
+					taskNotify.setFailReason("操作成功");
+				}catch (Exception e) {
+					System.out.println("读取文件链接报错图片路径：--->"+imgUrl);
+					e.printStackTrace();
 				}
 			}else if(task.getStatus().equals(TaskStatus.SUCCESS) && StringUtils.isBlank(task.getImageUrl())){
 				taskNotify.setFailReason("生成图片成功，Mj无图片链接");
