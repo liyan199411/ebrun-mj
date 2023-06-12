@@ -47,7 +47,7 @@ public class NotifyController {
 		String jsonString = JSONObject.toJSONString(task);
 		System.out.println("任务回调数据, task:"+ jsonString);
 		//Task task = JSON.parseObject(taskStr, Task.class);
-		if (task != null) {
+		/*if (task != null) {
 			if(StringUtils.isNotBlank(task.getImageUrl())){
 				String imgUrl = task.getImageUrl();
 				FileOutputStream fos = null;
@@ -98,7 +98,7 @@ public class NotifyController {
 					e.printStackTrace();
 				}
 			}
-		}
+		}*/
 
 	}
 }
