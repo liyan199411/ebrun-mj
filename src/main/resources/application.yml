@@ -32,7 +32,7 @@ mj:
     timeout: 480d
   translate-way: null
   queue:
-    timeout-minutes: 2
+    timeout-minutes: 5
     core-size: 3
     queue-size: 10
 spring:
