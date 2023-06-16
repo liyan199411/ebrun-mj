@@ -27,7 +27,7 @@ public class NotifyServiceImpl implements NotifyService {
 		}
 		try {
 			String paramsStr = OBJECT_MAPPER.writeValueAsString(task);
-			log.debug("任务变更, 触发推送, task: {}", paramsStr);
+			log.debug("任务变更, 触发推送, task: {},回调链接：{}", paramsStr,notifyHook);
 			postJson(notifyHook, paramsStr);
 		} catch (Exception e) {
 			log.warn("回调通知接口失败: {}", e.getMessage());
@@ -42,7 +42,7 @@ public class NotifyServiceImpl implements NotifyService {
 		if (responseEntity.getStatusCode() == HttpStatus.OK) {
 			return;
 		}
-		log.warn("回调通知接口失败, code: {}, msg: {}", responseEntity.getStatusCodeValue(), responseEntity.getBody());
+		log.warn("回调通知接口失败, code: {}, msg: {},回调接口：{}", responseEntity.getStatusCodeValue(), responseEntity.getBody(),notifyHook);
 	}
 
 }

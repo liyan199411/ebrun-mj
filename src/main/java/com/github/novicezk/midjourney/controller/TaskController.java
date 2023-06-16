@@ -43,7 +43,7 @@ public class TaskController {
 	@GetMapping("/{id}/fetch")
 	public TaskNotify getTask(@ApiParam(value = "任务id") @PathVariable String id) {
 		Task task = this.taskStoreService.getTask(id);
-		System.out.println("任务回调数据, task:"+ task);
+		System.out.println("获取任务数据, task:"+ task);
 		return this.taskService.uploadImgUrl(task);
 	}
 
