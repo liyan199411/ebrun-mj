@@ -37,4 +37,12 @@ public class TestController {
 		task.setImageUrl(imgUrl);
 		return taskService.uploadImgUrl(task);
 	}
+
+	@ApiOperation(value = "测试生成本地图片")
+	@GetMapping("/localityImg")
+	public TaskNotify localityImg(String imgUrl) {
+		Task task = new Task();
+		task.setImageUrl(imgUrl);
+		return taskService.localityImg(task);
+	}
 }

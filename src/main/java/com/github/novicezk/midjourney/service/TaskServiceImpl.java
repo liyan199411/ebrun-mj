@@ -1,8 +1,10 @@
 package com.github.novicezk.midjourney.service;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.convert.Convert;
 import cn.hutool.core.img.ImgUtil;
 import cn.hutool.core.io.FileUtil;
+import com.alibaba.fastjson.JSONObject;
 import com.github.novicezk.midjourney.ProxyProperties;
 import com.github.novicezk.midjourney.enums.TaskStatus;
 import com.github.novicezk.midjourney.result.Message;
@@ -10,6 +12,7 @@ import com.github.novicezk.midjourney.support.Task;
 import com.github.novicezk.midjourney.support.TaskCondition;
 import com.github.novicezk.midjourney.support.TaskNotify;
 import com.github.novicezk.midjourney.util.MimeTypeUtils;
+import com.github.novicezk.midjourney.util.OkHttpUtils;
 import eu.maxschuster.dataurl.DataUrl;
 import lombok.extern.slf4j.Slf4j;
 import net.coobird.thumbnailator.Thumbnails;
@@ -182,6 +185,109 @@ public class TaskServiceImpl implements TaskService {
 						System.out.println("压缩大图小图失败");
 					}
 					taskNotify.setFailReason("操作成功");
+				}catch (Exception e) {
+					System.out.println("读取文件链接报错图片路径：--->"+imgUrl);
+					e.printStackTrace();
+				}
+			}else if(task.getStatus().equals(TaskStatus.SUCCESS) && StringUtils.isBlank(task.getImageUrl())){
+				taskNotify.setFailReason("生成图片成功，Mj无图片链接");
+			}else {
+				if (StringUtils.isBlank(taskNotify.getFailReason())) {
+					if (task.getStatus().equals(TaskStatus.NOT_START)) {
+						taskNotify.setFailReason("未启动");
+					} else if (task.getStatus().equals(TaskStatus.SUBMITTED)) {
+						taskNotify.setFailReason("已提交处理");
+					} else if (task.getStatus().equals(TaskStatus.IN_PROGRESS)) {
+						taskNotify.setFailReason("执行中");
+					} else if (task.getStatus().equals(TaskStatus.FAILURE)) {
+						taskNotify.setFailReason("图片生成失败");
+					}
+				}
+			}
+		}
+		return taskNotify;
+	}
+
+	@Override
+	public TaskNotify localityImg(Task task) {
+		TaskNotify taskNotify = new TaskNotify();
+		if(task != null){
+			BeanUtil.copyProperties(task,taskNotify);
+			if(StringUtils.isNotBlank(task.getImageUrl())){
+				log.info("图片url="+task.getImageUrl());
+				String imgUrl = task.getImageUrl();
+				String filenameType = imgUrl.substring(imgUrl.lastIndexOf(".") + 1);
+				String filePath = generateFileName()+"aaa";
+
+				String basePath = "/tmp/ebrunmj/";
+				String orgFilePath = filePath + "_org" + "." + filenameType;
+				String bigFilePath = filePath + "_big" + "."+ filenameType;
+				String smallFilePath = filePath + "_small" + "."+ filenameType;
+				String orgPath = basePath +orgFilePath;
+				String bigPath = basePath + bigFilePath;
+				String smallPath = basePath + smallFilePath;
+				String imgPathUrl = "https://imgs.ebrun.com/midjourney/";
+
+				File localFile = new File(orgPath);
+				File parent = localFile.getParentFile();
+				if (parent != null && !parent.exists()) {
+					boolean mkdirs = parent.mkdirs();
+					if (!mkdirs) {
+						System.out.println(parent.getPath() + "创建失败，请检查是否有权限");
+					}
+				}
+				try {
+					imgFileGenerate(imgUrl,orgPath);
+					System.out.println("原图文件保存路径----->>" + orgPath);
+
+					System.out.println("生成原图可访问的路径：--->"+imgPathUrl+orgFilePath);
+
+					Map<String,Object> par = new HashMap<>();
+					par.put("filePath",filePath);
+					par.put("imgPathUrl",imgPathUrl);
+					JSONObject parJson = new JSONObject(par);
+					String parStr = parJson.toJSONString();
+					HashMap<String,String> header = new HashMap<>();
+					header.put("Content-Type","application/x-www-form-urlencoded");
+					String link = "https://oa.ebrun.com/documentonline/api/midjourney";
+					String result = OkHttpUtils.getInstance().doPostJson(link, parStr, header);
+					log.info("mj图片生成本地结果:"+result);
+					if (StringUtils.isNotBlank(result)) {
+						JSONObject jsonObject = JSONObject.parseObject(result);
+
+						String state = Convert.toStr(jsonObject.get("state"), "");
+						String info = Convert.toStr(jsonObject.get("info"), "");
+						String orgFilePathLocal = Convert.toStr(jsonObject.get("orgFilePath"), "");
+						if (StringUtils.isNotBlank(orgFilePathLocal)) {
+							if (orgFilePathLocal.equals(orgFilePath)) {
+								try{
+									if (localFile.isFile()) {
+										log.info("删除mj图片已生成的图片，路径:"+orgFilePath);
+										localFile.delete();
+									}
+								}catch (Exception e){
+									e.printStackTrace();
+								}
+							}
+
+							taskNotify.setLocalImageUrlOrigin(imgPathUrl+orgFilePathLocal);
+							String bigFilePathLocal = Convert.toStr(jsonObject.get("bigFilePath"), "");
+							String smallFilePathLocal = Convert.toStr(jsonObject.get("smallFilePath"), "");
+
+							taskNotify.setLocalImageUrlBig(imgPathUrl+bigFilePathLocal);
+							System.out.println("生成大图可访问的路径：--->"+imgPathUrl+bigFilePath);
+
+							taskNotify.setLocalImageUrl(imgPathUrl+smallFilePathLocal);
+							System.out.println("生成小图可访问的路径：--->"+imgPathUrl+smallFilePath);
+							log.info("本地原图结果:"+orgFilePathLocal);
+							log.info("本地大图结果:"+bigPath);
+							log.info("本地小图结果:"+smallPath);
+							taskNotify.setFailReason("操作成功");
+						}else {
+							taskNotify.setFailReason("生成图片转存本地失败，结果："+result);
+						}
+
+					}
 				}catch (Exception e) {
 					System.out.println("读取文件链接报错图片路径：--->"+imgUrl);
 					e.printStackTrace();

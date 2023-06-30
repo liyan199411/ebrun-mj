@@ -23,4 +23,6 @@ public interface TaskService {
 	Message<String> submitDescribe(Task task, DataUrl dataUrl);
 
 	TaskNotify uploadImgUrl(Task task);
+
+	TaskNotify localityImg(Task task);
 }
