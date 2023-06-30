@@ -245,12 +245,13 @@ public class TaskServiceImpl implements TaskService {
 					Map<String,Object> par = new HashMap<>();
 					par.put("filePath",filePath);
 					par.put("imgPathUrl",imgPathUrl);
-					JSONObject parJson = new JSONObject(par);
-					String parStr = parJson.toJSONString();
-					HashMap<String,String> header = new HashMap<>();
+					HashMap<String,Object> header = new HashMap<>();
 					header.put("Content-Type","application/x-www-form-urlencoded");
 					String link = "https://oa.ebrun.com/documentonline/api/midjourney";
-					String result = OkHttpUtils.getInstance().doPostJson(link, parStr, header);
+					long stateTime=System.currentTimeMillis();
+					String result = OkHttpUtils.getInstance().doPostForm(link, par, header);
+					long endTime=System.currentTimeMillis();
+					log.debug("mj图片生成本地结果运行时间"+(endTime- stateTime)+"ms...................................................................");
 					log.info("mj图片生成本地结果:"+result);
 					if (StringUtils.isNotBlank(result)) {
 						JSONObject jsonObject = JSONObject.parseObject(result);

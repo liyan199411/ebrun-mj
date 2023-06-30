@@ -33,11 +33,11 @@ public class OkHttpUtils {
     private OkHttpUtils() {
         okHttpClient = buildOKHttpClient()
                 //10秒连接超时
-                .connectTimeout(10, TimeUnit.SECONDS)
+                .connectTimeout(90, TimeUnit.SECONDS)
                 //10m秒写入超时
-                .writeTimeout(10, TimeUnit.SECONDS)
+                .writeTimeout(90, TimeUnit.SECONDS)
                 //10秒读取超时
-                .readTimeout(10, TimeUnit.SECONDS)
+                .readTimeout(90, TimeUnit.SECONDS)
                 .build();
     }
 
