@@ -54,7 +54,7 @@ public class TriggerController {
 		}
 		Task task = new Task();
 		if (StringUtils.isBlank(submitDTO.getNotifyHook())) {
-			submitDTO.setNotifyHook("http://172.31.5.254:9090/mj/notify/submit");
+			submitDTO.setNotifyHook("http://gpt.ebrun.com:9191/mj/notify/submit");
 		}
 
 
