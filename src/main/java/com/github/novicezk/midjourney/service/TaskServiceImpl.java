@@ -205,6 +205,8 @@ public class TaskServiceImpl implements TaskService {
 				}
 			}
 		}
+		taskNotify.setFailReason("任务不存在");
+		taskNotify.setStatus("FAILURE");
 		return taskNotify;
 	}
 
