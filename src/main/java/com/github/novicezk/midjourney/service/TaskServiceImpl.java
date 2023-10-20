@@ -121,8 +121,9 @@ public class TaskServiceImpl implements TaskService {
 			if(StringUtils.isNotBlank(task.getImageUrl())){
 				System.out.println("图片url="+task.getImageUrl());
 				String imgUrl = task.getImageUrl();
-				String filename = imgUrl.substring(imgUrl.lastIndexOf("/") + 1);
-				String filenameType = imgUrl.substring(imgUrl.lastIndexOf(".") + 1);
+				//String filename = imgUrl.substring(imgUrl.lastIndexOf("/") + 1);
+				//String filenameType = imgUrl.substring(imgUrl.lastIndexOf(".") + 1);
+				String filenameType = "png";
 				String filePath = generateFileName();
 				String basePath = "/tmp/ebrunmj/";
 				String orgFilePath = filePath + "_org" + "." + filenameType;
